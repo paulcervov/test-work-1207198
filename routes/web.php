@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Home\IndexController;
+use App\Http\Controllers\Home\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +21,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->prefix('home')->group(function () {
+
+    Route::get('/', [IndexController::class, 'index'])->name('home.index');
+
+    Route::name('home.')->group(function () {
+
+        Route::patch('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
+        Route::resource('users', UserController::class)->except('show');
+
+    });
+
+});
