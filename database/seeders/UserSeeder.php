@@ -18,18 +18,17 @@ class UserSeeder extends Seeder
         $roles = Role::all();
 
         User::factory()->create([
-            'name' => 'admin@example.com',
+            'email' => 'admin@example.com',
             'role_id' => $roles->firstWhere('name', 'Admin')->id
         ]);
 
         User::factory()->create([
-            'name' => 'editor@example.com',
+            'email' => 'editor@example.com',
             'role_id' => $roles->firstWhere('name', 'Editor')->id
         ]);
 
-
         User::factory()->create([
-            'name' => 'author@example.com',
+            'email' => 'author@example.com',
             'role_id' => $roles->firstWhere('name', 'Author')->id
         ]);
 
