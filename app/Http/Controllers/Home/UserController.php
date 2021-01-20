@@ -7,6 +7,7 @@ use App\Http\Requests\Home\StoreUserRequest;
 use App\Http\Requests\Home\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Response;
 
 class UserController extends Controller
@@ -69,7 +70,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('home.users.index')
-            ->with('status', __('statuses.user.created'));
+            ->with('status', __('messages.users.created'));
     }
 
     /**
@@ -120,7 +121,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('home.users.index')
-            ->with('status', __('statuses.user.updated'));
+            ->with('status', __('messages.users.updated'));
     }
 
     /**
@@ -128,9 +129,30 @@ class UserController extends Controller
      *
      * @param User $user
      * @return Response
+     * @throws Exception
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()
+            ->route('home.users.index')
+            ->with('status', __('messages.users.deleted'));
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()
+            ->findOrFail($id);
+
+        $user->restore();
+
+        return redirect()
+            ->route('home.users.index')
+            ->with('status', __('messages.users.restored'));
     }
 }

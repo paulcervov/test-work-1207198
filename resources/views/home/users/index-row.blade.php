@@ -6,7 +6,7 @@
 
         @if($user->trashed())
 
-            <button class="btn btn-secondary"
+            <button class="btn btn-light"
                     formaction="{{ route('home.users.restore', $user) }}"
                     form="restoreItem"
                     title="Restore"
@@ -25,9 +25,9 @@
             <button class="btn btn-danger  ml-sm-2"
                     formaction="{{ route('home.users.destroy', $user) }}"
                     form="deleteItem"
-                    title="Remove"
+                    title="Delete"
                     type="submit"
-            >Restore
+            >Delete
             </button>
 
         @endif

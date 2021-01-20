@@ -22,7 +22,7 @@
                 <tr class="d-flex">
                     <td>
                         <div class="col-sm-auto">
-                            Users not found
+                            {{ __('messages.users.not_found') }}
                         </div>
                     </td>
                 </tr>
