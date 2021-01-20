@@ -19,17 +19,20 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'email' => 'admin@example.com',
-            'role_id' => $roles->firstWhere('name', 'Admin')->id
+            'role_id' => $roles->firstWhere('name', 'Admin')->id,
+            'deleted_at' => null,
         ]);
 
         User::factory()->create([
             'email' => 'editor@example.com',
-            'role_id' => $roles->firstWhere('name', 'Editor')->id
+            'role_id' => $roles->firstWhere('name', 'Editor')->id,
+            'deleted_at' => null,
         ]);
 
         User::factory()->create([
             'email' => 'author@example.com',
-            'role_id' => $roles->firstWhere('name', 'Author')->id
+            'role_id' => $roles->firstWhere('name', 'Author')->id,
+            'deleted_at' => null,
         ]);
 
         User::factory(10)

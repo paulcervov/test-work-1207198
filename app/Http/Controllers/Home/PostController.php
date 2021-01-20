@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\StorePostRequest;
+use App\Http\Requests\Home\UpdatePostRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -82,19 +82,27 @@ class PostController extends Controller
      */
     public function edit(Post $post): View
     {
-        //
+        return view('home.posts.edit', [
+            'post' => $post,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdatePostRequest $request
      * @param Post $post
      * @return RedirectResponse
      */
-    public function update(Request $request, Post $post): RedirectResponse
+    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $post->update($validated);
+
+        return redirect()
+            ->route('home.posts.index')
+            ->with('status', __('messages.posts.updated'));
     }
 
     /**

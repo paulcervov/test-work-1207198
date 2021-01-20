@@ -31,7 +31,7 @@ class PostFactory extends Factory
             },
             'deleted_at' => function () {
                 return $this->faker->boolean(20)
-                    ? $this->faker->dateTimeBetween('-1 month')
+                    ? now()
                     : null;
             },
         ];
