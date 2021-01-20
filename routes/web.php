@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Home\IndexController;
+use App\Http\Controllers\Home\PostController;
 use App\Http\Controllers\Home\RoleController;
 use App\Http\Controllers\Home\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::middleware('auth')->prefix('home')->group(function () {
 
     Route::get('/', [IndexController::class, 'index'])->name('home.index');
@@ -35,5 +35,7 @@ Route::middleware('auth')->prefix('home')->group(function () {
         Route::patch('roles/{role}/restore', [RoleController::class, 'restore'])->name('roles.restore');
         Route::resource('roles', RoleController::class)->except('show');
 
+        Route::patch('posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
+        Route::resource('posts', PostController::class)->except('show');
     });
 });
