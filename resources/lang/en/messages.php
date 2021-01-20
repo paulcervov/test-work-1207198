@@ -22,4 +22,11 @@ return [
         'deleted' => 'Post has been deleted',
         'restored' => 'Post has been restored',
     ],
+    'categories' => [
+        'not_found' => 'Categories not found',
+        'created' => 'Category has been created',
+        'updated' => 'Category has been updated',
+        'deleted' => 'Category has been deleted',
+        'restored' => 'Category has been restored',
+    ],
 ];

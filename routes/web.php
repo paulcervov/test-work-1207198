@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Home\CategoryController;
 use App\Http\Controllers\Home\IndexController;
 use App\Http\Controllers\Home\PostController;
 use App\Http\Controllers\Home\RoleController;
@@ -37,5 +38,8 @@ Route::middleware('auth')->prefix('home')->group(function () {
 
         Route::patch('posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
         Route::resource('posts', PostController::class)->except('show');
+
+        Route::patch('categories/{category}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
+        Route::resource('categories', CategoryController::class)->except('show');
     });
 });

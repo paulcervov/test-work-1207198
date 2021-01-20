@@ -47,6 +47,10 @@
                             <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.posts')) active @endif">
                                 <a class="nav-link" href="{{ route('home.posts.index') }}">Posts</a>
                             </li>
+
+                            <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.categories')) active @endif">
+                                <a class="nav-link" href="{{ route('home.categories.index') }}">Categories</a>
+                            </li>
                         @endauth
                     </ul>
 
