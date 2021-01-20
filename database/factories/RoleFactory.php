@@ -23,7 +23,7 @@ class RoleFactory extends Factory
     {
         return [
             'name' => function () {
-                return ucfirst($this->faker->word);
+                return ucfirst($this->faker->unique()->word);
             },
         ];
     }

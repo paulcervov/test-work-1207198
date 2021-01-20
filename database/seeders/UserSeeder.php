@@ -32,9 +32,11 @@ class UserSeeder extends Seeder
             'role_id' => $roles->firstWhere('name', 'Author')->id
         ]);
 
-        User::factory(10)->make(['role_id' => null])->each(function ($user) use ($roles) {
-            $user->role_id = $roles->random()->id;
-            $user->save();
-        });
+        User::factory(10)
+            ->make(['role_id' => null])
+            ->each(function (User $user) use ($roles) {
+                $user->role_id = $roles->random()->id;
+                $user->save();
+            });
     }
 }
