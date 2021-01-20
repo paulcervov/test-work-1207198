@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -18,8 +19,11 @@ class PostSeeder extends Seeder
         Post::factory(50)
             ->make(['user_id' => null])
             ->each(function (Post $post) {
-                $post->user_id = User::inRandomOrder()->first()->id;
+                $user = User::inRandomOrder()->first();
+                $categories = Category::inRandomOrder()->limit(rand(1, 3))->get();
+                $post->user()->associate($user);
                 $post->save();
+                $post->categories()->attach($categories);
             });
     }
 }

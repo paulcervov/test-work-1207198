@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -20,8 +19,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'text',
-        'user_id'
+        'description',
     ];
 
     /**
@@ -32,18 +30,10 @@ class Post extends Model
     protected $perPage = 5;
 
     /**
-     * Get the user that owns the post.
+     * The posts that belong to the category.
      */
-    public function user(): BelongsTo
+    public function posts(): BelongsToMany
     {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * The categories that belong to the post.
-     */
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class, 'category_post', 'post_id');
+        return $this->belongsToMany(Post::class);
     }
 }
