@@ -22,7 +22,7 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => ucfirst($this->faker->word),
+            'title' => $this->faker->sentence(rand(1, 3)),
             'slug' => $this->faker->unique()->slug,
             'description' => $this->faker->realText(),
             'deleted_at' => function () {

@@ -84,9 +84,10 @@
                                 name="role_id"
                         >
                             <option value="">Not selected</option>
-                            @foreach($roles as $role)
-                                <option value="{{ $role->id }}"
-                                        @if($role->id === (int) old('role_id', $user->role_id)) selected @endif>{{ $role->name }}</option>
+
+                            @foreach(App\Models\User::ROLES as $roleId => $roleName)
+                                <option value="{{ $roleId }}"
+                                        @if($roleId === (int) old('role_id', $user->role_id)) selected @endif>{{ $roleName }}</option>
                             @endforeach
                         </select>
                         @error('role_id')

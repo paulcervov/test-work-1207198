@@ -124,7 +124,7 @@ class PostController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function restore($id): RedirectResponse
+    public function restore(int $id): RedirectResponse
     {
         $post = Post::onlyTrashed()
             ->findOrFail($id);

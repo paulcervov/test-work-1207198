@@ -33,9 +33,6 @@ Route::middleware('auth')->prefix('home')->group(function () {
         Route::patch('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
         Route::resource('users', UserController::class)->except('show');
 
-        Route::patch('roles/{role}/restore', [RoleController::class, 'restore'])->name('roles.restore');
-        Route::resource('roles', RoleController::class)->except('show');
-
         Route::patch('posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
         Route::resource('posts', PostController::class)->except('show');
 

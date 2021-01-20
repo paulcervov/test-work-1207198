@@ -40,10 +40,6 @@
                                 <a class="nav-link" href="{{ route('home.users.index') }}">Users</a>
                             </li>
 
-                            <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.roles')) active @endif">
-                                <a class="nav-link" href="{{ route('home.roles.index') }}">Roles</a>
-                            </li>
-
                             <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.posts')) active @endif">
                                 <a class="nav-link" href="{{ route('home.posts.index') }}">Posts</a>
                             </li>

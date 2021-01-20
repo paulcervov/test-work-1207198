@@ -1,6 +1,6 @@
 <tr class="d-flex">
     <td class="col-sm-3">{{ $user->name }}</td>
-    <td class="col-sm-3">{{ $roles->firstWhere('id', $user->role_id)->name }}</td>
+    <td class="col-sm-3">{{ \App\Models\User::ROLES[$user->role_id] }}</td>
     <td class="col-sm-3">{{ $user->updated_at->format('d.m.y H:i') }}</td>
     <td class="col-sm-3 text-right">
 

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,6 +11,20 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
+
+    const ID_ROLE_ADMINISTRATOR = 1;
+    const ID_ROLE_EDITOR = 2;
+    const ID_ROLE_AUTHOR = 3;
+
+    const NAME_ROLE_ADMINISTRATOR = 'Administrator';
+    const NAME_ROLE_EDITOR = 'Editor';
+    const NAME_ROLE_AUTHOR = 'Author';
+
+    const ROLES = [
+        self::ID_ROLE_ADMINISTRATOR => self::NAME_ROLE_ADMINISTRATOR,
+        self::ID_ROLE_EDITOR => self::NAME_ROLE_EDITOR,
+        self::ID_ROLE_AUTHOR => self::NAME_ROLE_AUTHOR,
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -50,14 +63,6 @@ class User extends Authenticatable
      * @var int
      */
     protected $perPage = 5;
-
-    /**
-     * Get the role that owns the user.
-     */
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
-    }
 
     /**
      * Get the posts for the user.

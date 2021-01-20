@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\StoreUserRequest;
 use App\Http\Requests\Home\UpdateUserRequest;
-use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -22,8 +21,8 @@ class UserController extends Controller
     {
         $users = User::query()
             ->withTrashed()
-            ->when(request('role'), function ($q, $role) {
-                return $q->where('role_id', $role);
+            ->when(request('role_id'), function ($q, $roleId) {
+                return $q->where('role_id', $roleId);
             })
             ->when(request('query'), function ($q, $query) {
                 return $q->where('name', 'like', "%{$query}%");
@@ -33,11 +32,8 @@ class UserController extends Controller
             })
             ->paginate();
 
-        $roles = Role::all();
-
         return view('home.users.index', [
             'users' => $users,
-            'roles' => $roles,
         ]);
     }
 
@@ -48,11 +44,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        $roles = Role::all();
-
-        return view('home.users.create', [
-            'roles' => $roles,
-        ]);
+        return view('home.users.create');
     }
 
     /**
@@ -93,11 +85,8 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
-        $roles = Role::all();
-
         return view('home.users.edit', [
             'user' => $user,
-            'roles' => $roles,
         ]);
     }
 
@@ -145,7 +134,7 @@ class UserController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function restore($id): RedirectResponse
+    public function restore(int $id): RedirectResponse
     {
         $user = User::onlyTrashed()
             ->findOrFail($id);

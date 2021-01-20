@@ -3,13 +3,13 @@
     <div class="col-sm-2">
         <select class="form-control border"
                 form="fetchItems"
-                name="role"
+                name="role_id"
         >
             <option value="">All roles</option>
-            @foreach($roles as $role)
-                <option value="{{ $role->id }}"
-                        @if($role->id === (int) request('role')) selected @endif
-                >{{ $role->name }}</option>
+            @foreach(\App\Models\User::ROLES as $roleId => $roleName)
+                <option value="{{ $roleId }}"
+                        @if($roleId === (int) request('role_id')) selected @endif
+                >{{ $roleName }}</option>
             @endforeach
         </select>
 
