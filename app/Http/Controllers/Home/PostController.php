@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Home\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,18 +41,26 @@ class PostController extends Controller
      */
     public function create(): View
     {
-        //
+        return view('home.posts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StorePostRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StorePostRequest $request): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+
+        $validated['user_id'] = auth()->id();
+
+        Post::create($validated);
+
+        return redirect()
+            ->route('home.posts.index')
+            ->with('status', __('messages.posts.created'));
     }
 
     /**
