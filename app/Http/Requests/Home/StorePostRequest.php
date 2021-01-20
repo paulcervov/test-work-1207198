@@ -27,6 +27,8 @@ class StorePostRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'alpha_dash', 'max:255', 'unique:posts'],
             'text' => ['required', 'string', 'max:16000'],
+            'categories' => ['array'],
+            'categories.*' => ['exists:categories,id'],
         ];
     }
 }

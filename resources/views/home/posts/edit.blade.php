@@ -73,6 +73,30 @@
                 @enderror
             </div>
 
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="categories">Categories</label>
+                        <select class="form-control @error('categories') is-invalid @enderror"
+                                id="categories"
+                                name="categories[]"
+                                multiple
+                        >
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}"
+                                        @if(in_array($category->id, old('categories', $post->categories->pluck('id')->toArray()) )) selected @endif
+                                >{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                        @error('categories')
+                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                        @enderror
+                    </div>
+                </div>
+            </div><!-- /.row -->
+
         </form>
 
         <button class="btn btn-primary" type="submit" form="updateItem">Save</button>

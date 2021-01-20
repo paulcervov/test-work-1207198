@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\StorePostRequest;
 use App\Http\Requests\Home\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -54,7 +56,9 @@ class PostController extends Controller
      */
     public function create(): View
     {
-        return view('home.posts.create');
+        $categories = Category::all();
+
+        return view('home.posts.create', ['categories' => $categories]);
     }
 
     /**
@@ -69,7 +73,10 @@ class PostController extends Controller
 
         $validated['user_id'] = auth()->id();
 
-        Post::create($validated);
+        $post = Post::create($validated);
+
+        $categories = Arr::get($validated, 'categories', []);
+        $post->categories()->sync($categories);
 
         return redirect()
             ->route('home.posts.index')
@@ -95,8 +102,13 @@ class PostController extends Controller
      */
     public function edit(Post $post): View
     {
+        $categories = Category::all();
+
+        $post->load('categories');
+
         return view('home.posts.edit', [
             'post' => $post,
+            'categories' => $categories
         ]);
     }
 
@@ -112,6 +124,9 @@ class PostController extends Controller
         $validated = $request->validated();
 
         $post->update($validated);
+
+        $categories = Arr::get($validated, 'categories', []);
+        $post->categories()->sync($categories);
 
         return redirect()
             ->route('home.posts.index')
