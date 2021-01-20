@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Home\StoreUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -45,18 +46,30 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+
+        return view('home.users.create', [
+            'roles' => $roles,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['password'] = bcrypt($validated['password']);
+
+        User::create($validated);
+
+        return redirect()
+            ->route('home.users.index')
+            ->with('status', __('statuses.user.created'));
     }
 
     /**
