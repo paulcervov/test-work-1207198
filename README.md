@@ -5,25 +5,24 @@ An example of a classic CRUD application, building with Laravel and Bootstrap.
 ## Run with Docker
 
 1. Run
-
-```
-   docker run --rm \
-   -v $(pwd):/opt \
-   -w /opt \
-   laravelsail/php80-composer:latest \
-   composer install
-```
+    ```
+       docker run --rm \
+       -v $(pwd):/opt \
+       -w /opt \
+       laravelsail/php80-composer:latest \
+       composer install
+    ```
 
 1. Run `cp .env.example .env`
 1. Run
 
-```
-   docker run --rm \
-   -v $(pwd):/opt \
-   -w /opt \
-   laravelsail/php80-composer:latest \
-   php artisan key:generate
-```
+    ```
+       docker run --rm \
+       -v $(pwd):/opt \
+       -w /opt \
+       laravelsail/php80-composer:latest \
+       php artisan key:generate
+    ```
 
 1. Run `./vendor/bin/sail up -d`
 1. Run `./vendor/bin/sail artisan migrate:fresh --seed`
