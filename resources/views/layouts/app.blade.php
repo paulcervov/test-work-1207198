@@ -36,17 +36,24 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth()
-                            <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.users')) active @endif">
-                                <a class="nav-link" href="{{ route('home.users.index') }}">Users</a>
-                            </li>
 
-                            <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.posts')) active @endif">
-                                <a class="nav-link" href="{{ route('home.posts.index') }}">Posts</a>
-                            </li>
+                            @can('viewAny', App\Models\User::class)
+                                <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.users')) active @endif">
+                                    <a class="nav-link" href="{{ route('home.users.index') }}">Users</a>
+                                </li>
+                            @endcan
 
-                            <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.categories')) active @endif">
-                                <a class="nav-link" href="{{ route('home.categories.index') }}">Categories</a>
-                            </li>
+                            @can('viewAny', App\Models\Category::class)
+                                <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.categories')) active @endif">
+                                    <a class="nav-link" href="{{ route('home.categories.index') }}">Categories</a>
+                                </li>
+                            @endcan
+
+                            @can('viewAny', App\Models\Post::class)
+                                <li class="nav-item @if (Str::startsWith(Route::currentRouteName(), 'home.posts')) active @endif">
+                                    <a class="nav-link" href="{{ route('home.posts.index') }}">Posts</a>
+                                </li>
+                            @endcan
                         @endauth
                     </ul>
 

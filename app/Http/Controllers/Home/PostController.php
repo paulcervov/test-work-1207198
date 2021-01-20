@@ -6,11 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\StorePostRequest;
 use App\Http\Requests\Home\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +31,9 @@ class PostController extends Controller
         $posts = Post::query()
             ->withTrashed()
             ->with('user')
+            ->when(User::ID_ROLE_AUTHOR === auth()->user()->role_id, function ($q) {
+                $q->where('user_id', auth()->id());
+            })
             ->when(request('query'), function ($q, $query) {
                 return $q->where('title', 'like', "%{$query}%");
             })
@@ -123,11 +136,14 @@ class PostController extends Controller
     /**
      * @param int $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function restore(int $id): RedirectResponse
     {
         $post = Post::onlyTrashed()
             ->findOrFail($id);
+
+        $this->authorize('restore', $post);
 
         $post->restore();
 

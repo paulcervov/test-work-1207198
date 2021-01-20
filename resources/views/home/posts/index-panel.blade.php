@@ -17,7 +17,9 @@
         <a class="btn btn-light ml-sm-2" href="{{ route('home.posts.index') }}">Reset</a>
     </div>
 
-    <div class="col-sm-auto ml-sm-auto">
-        <a href="{{ route('home.posts.create') }}" class="btn btn-primary">Create</a>
-    </div>
+    @can('create', App\Models\Post::class)
+        <div class="col-sm-auto ml-sm-auto">
+            <a href="{{ route('home.posts.create') }}" class="btn btn-primary">Create</a>
+        </div>
+    @endcan
 </div>

@@ -7,11 +7,20 @@ use App\Http\Requests\Home\StoreUserRequest;
 use App\Http\Requests\Home\UpdateUserRequest;
 use App\Models\User;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(User::class, 'user');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -133,11 +142,14 @@ class UserController extends Controller
     /**
      * @param int $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function restore(int $id): RedirectResponse
     {
         $user = User::onlyTrashed()
             ->findOrFail($id);
+
+        $this->authorize('restore', $user);
 
         $user->restore();
 
