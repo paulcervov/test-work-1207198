@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -19,10 +19,12 @@ class RoleFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => fn() => ucfirst($this->faker->word),
+            'name' => function () {
+                return ucfirst($this->faker->word);
+            },
         ];
     }
 }

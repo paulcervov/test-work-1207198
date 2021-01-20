@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers\Home;
 
@@ -8,16 +8,17 @@ use App\Http\Requests\Home\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $users = User::query()
             ->withTrashed()
@@ -43,9 +44,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $roles = Role::all();
 
@@ -58,9 +59,9 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param StoreUserRequest $request
-     * @return Response
+     * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -77,9 +78,9 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return View
      */
-    public function show(User $user)
+    public function show(User $user): View
     {
         //
     }
@@ -88,9 +89,9 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return View
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $roles = Role::all();
 
@@ -105,9 +106,9 @@ class UserController extends Controller
      *
      * @param UpdateUserRequest $request
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -128,10 +129,10 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param User $user
-     * @return Response
+     * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         $user->delete();
 
@@ -144,7 +145,7 @@ class UserController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function restore($id)
+    public function restore($id): RedirectResponse
     {
         $user = User::onlyTrashed()
             ->findOrFail($id);
