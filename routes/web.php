@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Home\IndexController;
+use App\Http\Controllers\Home\RoleController;
 use App\Http\Controllers\Home\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::middleware('auth')->prefix('home')->group(function () {
         Route::patch('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore');
         Route::resource('users', UserController::class)->except('show');
 
-    });
+        Route::patch('roles/{role}/restore', [RoleController::class, 'restore'])->name('roles.restore');
+        Route::resource('roles', RoleController::class)->except('show');
 
+    });
 });
