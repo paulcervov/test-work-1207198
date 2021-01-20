@@ -15,4 +15,11 @@ return [
         'deleted' => 'Role has been deleted',
         'restored' => 'Role has been restored',
     ],
+    'posts' => [
+        'not_found' => 'Posts not found',
+        'created' => 'Post has been created',
+        'updated' => 'Post has been updated',
+        'deleted' => 'Post has been deleted',
+        'restored' => 'Post has been restored',
+    ],
 ];

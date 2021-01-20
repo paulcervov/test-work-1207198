@@ -113,6 +113,26 @@ class PostController extends Controller
      */
     public function destroy(Post $post): RedirectResponse
     {
-        //
+        $post->delete();
+
+        return redirect()
+            ->route('home.posts.index')
+            ->with('status', __('messages.posts.deleted'));
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function restore($id): RedirectResponse
+    {
+        $post = Post::onlyTrashed()
+            ->findOrFail($id);
+
+        $post->restore();
+
+        return redirect()
+            ->route('home.posts.index')
+            ->with('status', __('messages.posts.restored'));
     }
 }
