@@ -4,16 +4,17 @@
 
     <div class="container">
 
-        <h2 class="mb-sm-3">New user</h2>
+        <h2 class="mb-sm-3">Editing user</h2>
 
         @include('shared.errors')
 
         <form class="mb-sm-3 border-bottom"
-              id="storeItem"
+              id="updateItem"
               method="POST"
-              action="{{ route('home.users.store') }}">
+              action="{{ route('home.users.update', $user) }}">
 
             @csrf
+            @method('PATCH')
 
             <div class="row mb-sm-3">
                 <div class="col-sm-3">
@@ -24,7 +25,7 @@
                         <input class="form-control @error('name') is-invalid @enderror"
                                id="name"
                                type="text" name="name"
-                               value="{{ old('name') }}"
+                               value="{{ old('name', $user->name) }}"
                                maxlength="255"
                         >
 
@@ -43,8 +44,8 @@
                         <input class="form-control @error('email') is-invalid @enderror"
                                id="email"
                                type="text" name="email"
+                               value="{{ old('email', $user->email) }}"
                                maxlength="255"
-                               autocomplete="new-password"
                         >
 
                         @error('email')
@@ -63,8 +64,8 @@
                         <input class="form-control @error('password') is-invalid @enderror"
                                id="password"
                                type="password" name="password"
-                               value="{{ old('password') }}"
                                maxlength="255"
+                               autocomplete="new-password"
                         >
 
                         @error('password')
@@ -85,7 +86,7 @@
                             <option value="">Not selected</option>
                             @foreach($roles as $role)
                                 <option value="{{ $role->id }}"
-                                        @if($role->id === (int) old('role_id')) selected @endif>{{ $role->name }}</option>
+                                        @if($role->id === (int) old('role_id', $user->role_id)) selected @endif>{{ $role->name }}</option>
                             @endforeach
                         </select>
                         @error('role_id')
@@ -100,7 +101,7 @@
 
         </form>
 
-        <button class="btn btn-primary" type="submit" form="storeItem">Save</button>
+        <button class="btn btn-primary" type="submit" form="updateItem">Save</button>
         <a class="btn btn-light ml-sm-2" href="{{ route('home.users.index') }}">Cancel</a>
 
     </div>
