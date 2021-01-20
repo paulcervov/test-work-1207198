@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Home\StoreRoleRequest;
 use App\Http\Requests\Home\UpdateRoleRequest;
 use App\Models\Role;
+use Exception;
 use Illuminate\Http\Response;
 
 class RoleController extends Controller
@@ -106,9 +107,30 @@ class RoleController extends Controller
      *
      * @param Role $role
      * @return Response
+     * @throws Exception
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+
+        return redirect()
+            ->route('home.roles.index')
+            ->with('status', __('messages.roles.deleted'));
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function restore($id)
+    {
+        $role = Role::onlyTrashed()
+            ->findOrFail($id);
+
+        $role->restore();
+
+        return redirect()
+            ->route('home.roles.index')
+            ->with('status', __('messages.roles.restored'));
     }
 }

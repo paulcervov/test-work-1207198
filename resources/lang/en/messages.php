@@ -8,4 +8,11 @@ return [
         'deleted' => 'User has been deleted',
         'restored' => 'User has been restored',
     ],
+    'roles' => [
+        'not_found' => 'Roles not found',
+        'created' => 'Role has been created',
+        'updated' => 'Role has been updated',
+        'deleted' => 'Role has been deleted',
+        'restored' => 'Role has been restored',
+    ],
 ];
