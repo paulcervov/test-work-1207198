@@ -71,10 +71,17 @@
 
     <main class="py-4">
         <div class="container">
-            Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+
+            <post-listing
+                url="{{ route('api.posts.index') }}"
+                :per-page=9
+                :page=1
+            >
+            </post-listing>
+
+            <small>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</small>
         </div>
     </main>
 </div>
 </body>
-
 </html>
